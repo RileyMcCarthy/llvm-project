@@ -322,8 +322,23 @@ let DecoderMethod = "DecodeTJInstruction", isBranch = 1, isBarrier = 1, isTermin
 
 let Constraints = "$s1 = $d", s_num = 2 in {
     // don't use multiclass here because we don't want to use the imm operand type
+    def DJZrr  : P2InstIDS<0b101101100, 0b0, (outs P2GPR:$d), (ins P2GPR:$s1, P2GPR:$s), "djz $d, $s">;
+    def DJZri  : P2InstIDS<0b101101100, 0b1, (outs P2GPR:$d), (ins P2GPR:$s1, jmp9target:$s), "djz $d, $s">;
+
     def DJNZrr  : P2InstIDS<0b101101101, 0b0, (outs P2GPR:$d), (ins P2GPR:$s1, P2GPR:$s), "djnz $d, $s">;
     def DJNZri  : P2InstIDS<0b101101101, 0b1, (outs P2GPR:$d), (ins P2GPR:$s1, jmp9target:$s), "djnz $d, $s">;
+
+    def DJFrr  : P2InstIDS<0b101101110, 0b0, (outs P2GPR:$d), (ins P2GPR:$s1, P2GPR:$s), "djf $d, $s">;
+    def DJFri  : P2InstIDS<0b101101110, 0b1, (outs P2GPR:$d), (ins P2GPR:$s1, jmp9target:$s), "djf $d, $s">;
+
+    def DJNFrr  : P2InstIDS<0b101101111, 0b0, (outs P2GPR:$d), (ins P2GPR:$s1, P2GPR:$s), "djnf $d, $s">;
+    def DJNFri  : P2InstIDS<0b101101111, 0b1, (outs P2GPR:$d), (ins P2GPR:$s1, jmp9target:$s), "djnf $d, $s">;
+
+    def IJZrr  : P2InstIDS<0b101110000, 0b0, (outs P2GPR:$d), (ins P2GPR:$s1, P2GPR:$s), "ijz $d, $s">;
+    def IJZri  : P2InstIDS<0b101110000, 0b1, (outs P2GPR:$d), (ins P2GPR:$s1, jmp9target:$s), "ijz $d, $s">;
+
+    def IJNZrr  : P2InstIDS<0b101110001, 0b0, (outs P2GPR:$d), (ins P2GPR:$s1, P2GPR:$s), "ijnz $d, $s">;
+    def IJNZri  : P2InstIDS<0b101110001, 0b1, (outs P2GPR:$d), (ins P2GPR:$s1, jmp9target:$s), "ijnz $d, $s">;
 }
 
 defm REP    : P2InstLIDSm<0b11001101, "rep">;
