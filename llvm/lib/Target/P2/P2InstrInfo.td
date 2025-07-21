@@ -536,6 +536,8 @@ defm SETWORD    : P2Inst1NIDSm<0b10010010, "setword">;
 defm GETWORD    : P2Inst1NIDSm<0b10010011, "getword">;
 defm ROLWORD    : P2Inst1NIDSm<0b10010100, "rolword">;
 
+defm MOVBYTS    : P2InstIDSm<0b100111111, "movbyts">;
+
 /*--------------------------------*/
 /* Register indirection           */
 /*--------------------------------*/
