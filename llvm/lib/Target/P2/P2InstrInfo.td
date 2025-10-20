@@ -492,8 +492,11 @@ def WRDLONG     : Pseudo<(outs), (ins P2GPRPair:$reg, P2GPR:$addr), "wrdlong $re
 
 def : Pat<(i64 (load addr:$s)), (RDDLONG P2GPR:$s)>;
 
-def : Pat<(zextloadi1 imm:$s), (ZEROXri (RDBYTEri imm:$s, always, noeff), 0, always, noeff)>;
-def : Pat<(zextloadi1 addr:$s), (ZEROXri (RDBYTEri imm:$s, always, noeff), 0, always, noeff)>;
+// i1 loads: handle zero/any/sign extending and both immediate and register addressing
+def : Pat<(zextloadi1 imm:$s),  (ZEROXri (RDBYTEri imm:$s, always, noeff), 0, always, noeff)>;
+def : Pat<(zextloadi1 addr:$s), (ZEROXri (RDBYTErr P2GPR:$s, always, noeff), 0, always, noeff)>;
+def : Pat<(extloadi1 imm:$s),   (ZEROXri (RDBYTEri imm:$s, always, noeff), 0, always, noeff)>;
+def : Pat<(extloadi1 addr:$s),  (ZEROXri (RDBYTErr P2GPR:$s, always, noeff), 0, always, noeff)>;
 def : Pat<(zextloadi8 imm:$s), (RDBYTEri imm:$s, always, noeff)>;
 def : Pat<(zextloadi8 addr:$s), (RDBYTErr P2GPR:$s, always, noeff)>;
 def : Pat<(zextloadi16 imm:$s), (RDWORDri imm:$s, always, noeff)>;
@@ -515,6 +518,7 @@ def : Pat<(store i64:$d, addr:$s), (WRDLONG P2GPRPair:$d, P2GPR:$s)>;
 def : Pat<(extloadi8 addr:$s), (RDBYTErr P2GPR:$s, always, noeff)>;
 def : Pat<(extloadi16 addr:$s), (RDWORDrr P2GPR:$s, always, noeff)>;
 
+def : Pat<(sextloadi1 imm:$s),  (SIGNXri (RDBYTEri imm:$s, always, noeff), 0, always, noeff)>;
 def : Pat<(sextloadi1 addr:$s), (SIGNXri (RDBYTErr P2GPR:$s, always, noeff), 0, always, noeff)>;
 def : Pat<(sextloadi8 addr:$s), (SIGNXri (RDBYTErr P2GPR:$s, always, noeff), 7, always, noeff)>;
 def : Pat<(sextloadi16 addr:$s), (SIGNXri (RDWORDrr P2GPR:$s, always, noeff), 15, always, noeff)>;
