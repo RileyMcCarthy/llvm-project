@@ -34,4 +34,7 @@ P2MCAsmInfo::P2MCAsmInfo(const Triple &TheTriple, const MCTargetOptions &Options
     ProtectedVisibilityAttr = MCSA_Invalid;
     UseIntegratedAssembler = true;
     PreserveAsmComments = true;
+
+    // Enable generation and emission of DWARF debug sections.
+    SupportsDebugInformation = true;
 }
